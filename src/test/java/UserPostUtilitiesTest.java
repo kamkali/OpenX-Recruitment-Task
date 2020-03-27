@@ -3,7 +3,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -45,8 +44,8 @@ public class UserPostUtilitiesTest {
 
     @Test
     void should_merge_post_and_user_data() {
-        UserPostUtilities tool = new UserPostUtilities();
-        assertEquals(2, tool.mergePostsWithUser(userInfoList, postList).size());
+        UserPostUtilities userPostUtilities = new UserPostUtilities();
+        assertEquals(2, userPostUtilities.mergePostsWithUser(userInfoList, postList).size());
     }
 
     @Test
