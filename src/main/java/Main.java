@@ -1,19 +1,26 @@
 import models.Post;
-import models.UserInfo;
+        import models.User;
 
-import java.io.IOException;
-import java.util.List;
+        import java.io.IOException;
+        import java.util.List;
+import java.util.Map;
 
 public class Main {
     public static void main(String[] args) throws IOException {
         RestClient restClient = new RestClient();
 
         List<Post> postDataFromApi = restClient.getPostDataFromApi();
-        List<UserInfo> userInfoList = restClient.getUserInfoDataFromApi();
+        List<User> userInfoList = restClient.getUserInfoDataFromApi();
 
-        System.out.println(postDataFromApi.size());
+        UserUtilities userUtilities = new UserUtilities();
 
-        for (UserInfo u : userInfoList)
-            System.out.println(u);
+        Map<User, List<Post>> mergedApi = userUtilities.mergePostsWithUser(userInfoList, postDataFromApi);
+
+        for (Map.Entry<User, List<Post>> u: mergedApi.entrySet()) {
+            System.out.println(u.getValue().size());
+        }
+
+        List<String> posts = userUtilities.countUserPosts(mergedApi);
+        System.out.println(posts);
     }
 }

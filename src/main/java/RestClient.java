@@ -1,6 +1,6 @@
 import com.google.gson.Gson;
 import models.Post;
-import models.UserInfo;
+import models.User;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -25,9 +25,9 @@ public class RestClient {
         return Arrays.asList(gson.fromJson(reader, Post[].class));
     }
 
-    public List<UserInfo> getUserInfoDataFromApi() throws IOException {
+    public List<User> getUserInfoDataFromApi() throws IOException {
         InputStreamReader reader = new InputStreamReader(usersURL.openStream());
-        return Arrays.asList(gson.fromJson(reader, UserInfo[].class));
+        return Arrays.asList(gson.fromJson(reader, User[].class));
     }
 
 
