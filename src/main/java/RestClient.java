@@ -29,6 +29,4 @@ public class RestClient {
         InputStreamReader reader = new InputStreamReader(usersURL.openStream());
         return Arrays.asList(gson.fromJson(reader, User[].class));
     }
-
-
 }

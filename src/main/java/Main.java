@@ -12,15 +12,15 @@ public class Main {
         List<Post> postDataFromApi = restClient.getPostDataFromApi();
         List<User> userInfoList = restClient.getUserInfoDataFromApi();
 
-        UserUtilities userUtilities = new UserUtilities();
+        UserPostUtilities userPostUtilities = new UserPostUtilities();
 
-        Map<User, List<Post>> mergedApi = userUtilities.mergePostsWithUser(userInfoList, postDataFromApi);
+        Map<User, List<Post>> mergedApi = userPostUtilities.mergePostsWithUser(userInfoList, postDataFromApi);
 
         for (Map.Entry<User, List<Post>> u: mergedApi.entrySet()) {
             System.out.println(u.getValue().size());
         }
 
-        List<String> posts = userUtilities.countUserPosts(mergedApi);
+        List<String> posts = userPostUtilities.countUserPosts(mergedApi);
         System.out.println(posts);
     }
 }

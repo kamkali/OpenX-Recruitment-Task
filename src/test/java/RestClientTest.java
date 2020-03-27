@@ -4,12 +4,12 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+//TODO: Test Exceptions
 class RestClientTest {
 
     private List<Post> postList = new ArrayList<>();
