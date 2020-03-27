@@ -49,51 +49,40 @@ public class UserPostUtilities {
     public Map<User, User> findNearestNeighbours(List<User> userList) {
         Map<User, User> userMap = new HashMap<>();
         for (User user : userList) {
-            userMap.put(user,
-                    userList.stream()
-                            .filter(u -> !u.equals(user))
-                            .min(Comparator.comparing(u -> calculateDistance(user, u)))
-                            .get());
+            Optional<User> closest = userList.stream()
+                    .filter(u -> !u.equals(user))
+                    .min(Comparator.comparing(u -> calculateDistance(user, u)));
+
+            userMap.put(user, closest.orElse(null));
         }
         return userMap;
-    }
-
-    public Map<User, Map<User, Double>> findEveryDistance(List<User> userList) {
-        Map<User, Map<User, Double>> resultMap = new HashMap<>();
-        Map<User, Double> distanceMap = new HashMap<>();
-
-        for (User user : userList){
-            for (User u : userList){
-                Double distance = calculateDistance(user, u);
-                distanceMap.put(u, distance);
-            }
-            resultMap.put(user,distanceMap);
-        }
-        return resultMap;
     }
 
     /**
      * Calculate the 'great circle' distance between two users
      * using Haversine formula
      * a = sin²(ΔlatDifference/2) + cos(lat1).cos(lt2).sin²(ΔlonDifference/2)
-     * c = 2*atan2(√a, √(1−a))
+     * c = 2*asin(√a)
      * d = R*c
      *
-     * @return
+     * @return distance between user1 and user2
      */
     private double calculateDistance(User user1, User user2) {
-        double latU1 = Double.parseDouble(user1.getAddress().getGeo().getLat());
-        double latU2 = Double.parseDouble(user2.getAddress().getGeo().getLat());
+        double dLatDiff = Math.toRadians(
+                Double.parseDouble(user2.getAddress().getGeo().getLat()) -
+                        Double.parseDouble(user1.getAddress().getGeo().getLat()));
+        double dLngDiff = Math.toRadians(
+                Double.parseDouble(user2.getAddress().getGeo().getLng()) -
+                        Double.parseDouble(user1.getAddress().getGeo().getLng()));
 
-        double lngU1 = Double.parseDouble(user1.getAddress().getGeo().getLng());
-        double lngU2 = Double.parseDouble(user2.getAddress().getGeo().getLng());
+        double lat1 = Math.toRadians(Double.parseDouble(user1.getAddress().getGeo().getLat()));
+        double lat2 = Math.toRadians(Double.parseDouble(user2.getAddress().getGeo().getLat()));
 
-
-        double deltaLat = Math.toRadians(latU2 - latU1);
-        double deltaLng = Math.toRadians(lngU2 - lngU1);
-
-        double a = Math.pow(Math.sin(deltaLat / 2), 2) * Math.cos(latU1) * Math.cos(latU2) * Math.pow(Math.sin(deltaLng/2), 2);
-        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        double a = Math.pow(Math.sin(dLatDiff / 2), 2) +
+                Math.pow(Math.sin(dLngDiff / 2), 2) *
+                        Math.cos(lat1) *
+                        Math.cos(lat2);
+        double c = 2 * Math.asin(Math.sqrt(a));
         return R * c;
     }
 }
