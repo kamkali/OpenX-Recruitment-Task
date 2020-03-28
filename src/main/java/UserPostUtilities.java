@@ -7,18 +7,22 @@ import java.util.stream.Collectors;
 public class UserPostUtilities {
     public static final double R = 6371.8; // mean Earth radius in km
 
-    public Map<User, List<Post>> mergePostsWithUser(List<User> users, List<Post> posts) {
+    private UserPostUtilities() {
+        throw new IllegalStateException("Utility class");
+    }
+
+    public static Map<User, List<Post>> mergePostsWithUser(List<User> users, List<Post> posts) {
         Map<User, List<Post>> usersWithPosts = new HashMap<>();
-        for(User u : users) {
-            usersWithPosts.put(u,
+        for(User user : users) {
+            usersWithPosts.put(user,
                     posts.stream()
-                    .filter(p -> p.getUserId().equals(u.getId()))
+                    .filter(p -> p.getUserId().equals(user.getId()))
                     .collect(Collectors.toList()));
         }
         return usersWithPosts;
     }
 
-    public List<String> countUserPosts(Map<User, List<Post>> userPosts) {
+    public static List<String> countUserPosts(Map<User, List<Post>> userPosts) {
         List<String> userPostsCount = new ArrayList<>();
         for (Map.Entry<User, List<Post>> m : userPosts.entrySet()) {
             userPostsCount.add(m.getKey().getName() + " napisał(a) " + m.getValue().size() + " postów");
@@ -26,13 +30,13 @@ public class UserPostUtilities {
         return userPostsCount;
     }
 
-    private boolean isPostTitlesUnique(List<Post> postList) {
+    private static boolean isPostTitlesUnique(List<Post> postList) {
         return (postList.stream()
                 .map(Post::getTitle)
                 .distinct().count() == postList.size());
     }
 
-    public List<String> getNotUniquePostTitles(List<Post> postList) {
+    public static List<String> getNotUniquePostTitles(List<Post> postList) {
         if (isPostTitlesUnique(postList))
             return Collections.emptyList();
 
@@ -46,7 +50,7 @@ public class UserPostUtilities {
                 .collect(Collectors.toList());
     }
 
-    public Map<User, User> findNearestNeighbours(List<User> userList) {
+    public static Map<User, User> findNearestNeighbours(List<User> userList) {
         Map<User, User> userMap = new HashMap<>();
         for (User user : userList) {
             Optional<User> closest = userList.stream()
@@ -59,15 +63,15 @@ public class UserPostUtilities {
     }
 
     /**
-     * Calculate the 'great circle' distance between two users
-     * using Haversine formula
+     * Calculate the 'great circle' distance between two users using Haversine formula
+     *
      * a = sin²(ΔlatDifference/2) + cos(lat1).cos(lt2).sin²(ΔlonDifference/2)
      * c = 2*asin(√a)
      * d = R*c
      *
      * @return distance between user1 and user2
      */
-    private double calculateDistance(User user1, User user2) {
+    private static double calculateDistance(User user1, User user2) {
         double dLatDiff = Math.toRadians(
                 Double.parseDouble(user2.getAddress().getGeo().getLat()) -
                         Double.parseDouble(user1.getAddress().getGeo().getLat()));

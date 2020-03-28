@@ -4,7 +4,9 @@ import org.junit.jupiter.api.Test;
 
 import java.util.*;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.internal.matchers.Equality.areEqual;
 
 public class UserPostUtilitiesTest {
 
@@ -13,7 +15,7 @@ public class UserPostUtilitiesTest {
     private List<User> userInfoList = new ArrayList<>();
 
     @BeforeEach
-    void setUpData() {
+    void setUpTestData() {
         postList.add(new Post(1, 1, "sunt aut facere repellat provident occaecati excepturi optio reprehenderit",
                 "quia et suscipit\nsuscipit recusandae consequuntur expedita et cum\nreprehenderit molestiae ut ut quas totam\nnostrum rerum est autem sunt rem eveniet architecto"));
         postList.add(new Post(1, 2, "qui est esse",
@@ -44,35 +46,56 @@ public class UserPostUtilitiesTest {
 
     @Test
     void should_merge_post_and_user_data() {
-        UserPostUtilities userPostUtilities = new UserPostUtilities();
-        assertEquals(2, userPostUtilities.mergePostsWithUser(userInfoList, postList).size());
+        assertEquals(2, UserPostUtilities.mergePostsWithUser(userInfoList, postList).size());
     }
 
     @Test
     void should_count_user_posts() {
-        UserPostUtilities userPostUtilities = new UserPostUtilities();
         List<String> output = new ArrayList<>();
-        Map<User, List<Post>> mergedApi = userPostUtilities.mergePostsWithUser(userInfoList, postList);
+        Map<User, List<Post>> mergedApi = UserPostUtilities.mergePostsWithUser(userInfoList, postList);
 
         for (Map.Entry<User, List<Post>> m : mergedApi.entrySet()) {
             output.add(m.getKey().getName() + " napisał(a) " + m.getValue().size() + " postów");
         }
 
-        assertEquals(output, userPostUtilities.countUserPosts(mergedApi));
+        assertEquals(output, UserPostUtilities.countUserPosts(mergedApi));
     }
 
     @Test
     void should_return_not_unique_post_titles() {
-        UserPostUtilities userPostUtilities = new UserPostUtilities();
         List<String> notUniqueTitles = new ArrayList<>();
         notUniqueTitles.add("qui est esse");
 
-        assertEquals(notUniqueTitles, userPostUtilities.getNotUniquePostTitles(postList));
+        assertEquals(notUniqueTitles, UserPostUtilities.getNotUniquePostTitles(postList));
     }
 
     @Test
     void should_return_empty_list_when_unique() {
-        UserPostUtilities userPostUtilities = new UserPostUtilities();
-        assertEquals(0, userPostUtilities.getNotUniquePostTitles(uniquePostList).size());
+        assertEquals(0, UserPostUtilities.getNotUniquePostTitles(uniquePostList).size());
+    }
+
+    @Test
+    void should_calculate_distance_properly() {
+        User user1 = new User(1, null, null, null, new Address(null, null, null, null,
+                new Geo("10", "10")), null, null, null);
+
+        User user2 = new User(2, null, null, null, new Address(null, null, null, null,
+                new Geo("-10", "10")), null, null, null);
+
+        User user3 = new User(3, null, null, null, new Address(null, null, null, null,
+                new Geo("10", "-10")), null, null, null);
+         /*
+            User1 : User3
+            User2 : User1
+            User3 : User1
+         */
+        Map<User, User> expectedMap = new HashMap<>();
+        expectedMap.put(user1, user3);
+        expectedMap.put(user2, user1);
+        expectedMap.put(user3, user1);
+
+        Map<User, User> resultMap = UserPostUtilities.findNearestNeighbours(Arrays.asList(user1, user2, user3));
+
+        assertTrue(areEqual(expectedMap, resultMap));
     }
 }
