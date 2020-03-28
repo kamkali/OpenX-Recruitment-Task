@@ -46,13 +46,13 @@ public class UserPostUtilitiesTest {
 
     @Test
     void should_merge_post_and_user_data() {
-        assertEquals(2, UserPostUtilities.mergePostsWithUser(userInfoList, postList).size());
+        assertEquals(2, UserPostUtilities.mergePostsWithUsers(userInfoList, postList).size());
     }
 
     @Test
     void should_count_user_posts() {
         List<String> output = new ArrayList<>();
-        Map<User, List<Post>> mergedApi = UserPostUtilities.mergePostsWithUser(userInfoList, postList);
+        Map<User, List<Post>> mergedApi = UserPostUtilities.mergePostsWithUsers(userInfoList, postList);
 
         for (Map.Entry<User, List<Post>> m : mergedApi.entrySet()) {
             output.add(m.getKey().getName() + " napisał(a) " + m.getValue().size() + " postów");

@@ -39,12 +39,12 @@ public class RestClient {
     }
 
     public List<User> getUserInfoDataFromApi() {
-        List<User> userInfoList = new ArrayList<>();
+        List<User> userList = new ArrayList<>();
         try (InputStreamReader reader = new InputStreamReader(usersURL.openStream())) {
-            userInfoList = Arrays.asList(gson.fromJson(reader, User[].class));
+            userList = Arrays.asList(gson.fromJson(reader, User[].class));
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return userInfoList;
+        return userList;
     }
 }

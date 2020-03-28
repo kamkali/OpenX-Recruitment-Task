@@ -11,7 +11,7 @@ public class UserPostUtilities {
         throw new IllegalStateException("Utility class");
     }
 
-    public static Map<User, List<Post>> mergePostsWithUser(List<User> users, List<Post> posts) {
+    public static Map<User, List<Post>> mergePostsWithUsers(List<User> users, List<Post> posts) {
         Map<User, List<Post>> usersWithPosts = new HashMap<>();
         for(User user : users) {
             usersWithPosts.put(user,
@@ -33,7 +33,8 @@ public class UserPostUtilities {
     private static boolean isPostTitlesUnique(List<Post> postList) {
         return (postList.stream()
                 .map(Post::getTitle)
-                .distinct().count() == postList.size());
+                .distinct()
+                .count() == postList.size());
     }
 
     public static List<String> getNotUniquePostTitles(List<Post> postList) {
