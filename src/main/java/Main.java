@@ -1,43 +1,62 @@
 import models.Post;
 import models.User;
 
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
 import java.util.Map;
 
 public class Main {
     public static void main(String[] args) {
-        // 1. Get data from API
-        RestClient restClient = new RestClient();
-        List<Post> postList = restClient.getPostDataFromApi();
-        List<User> userList = restClient.getUserInfoDataFromApi();
+        try (PrintWriter writer = new PrintWriter(new FileWriter("output.txt"))) {
 
-        // Merge data
-        Map<User, List<Post>> mergedApi = UserPostUtilities.mergePostsWithUsers(userList, postList);
+            // 1. Get data from API
+            RestClient restClient = new RestClient();
+            List<Post> postList = restClient.getPostDataFromApi();
+            List<User> userList = restClient.getUserInfoDataFromApi();
 
-        System.out.println("======================Zadanie 1======================");
-        // 2. Count how many posts each user posted and return it as list
-        List<String> posts = UserPostUtilities.countUserPosts(mergedApi);
-        for (String s : posts)
-            System.out.println(s);
+            // Merge data
+            Map<User, List<Post>> mergedApi = UserPostUtilities.mergePostsWithUsers(userList, postList);
 
-        System.out.println("======================Zadanie 2======================");
-
-        // 3. Check for unique posts
-        List<String> notUniquePosts = UserPostUtilities.getNotUniquePostTitles(postList);
-        int numberOfNotUnique = notUniquePosts.size();
-        if (numberOfNotUnique == 0)
-            System.out.println("All post titles are unique");
-        else {
-            for (String s : notUniquePosts)
+            System.out.println("======================Zadanie 1======================");
+            writer.printf("======================Zadanie 1======================%n");
+            // 2. Count how many posts each user posted and return it as list
+            List<String> posts = UserPostUtilities.countUserPosts(mergedApi);
+            for (String s : posts) {
                 System.out.println(s);
-        }
+                writer.printf("%s%n", s);
+            }
 
-        System.out.println("======================Zadanie 3======================");
+            System.out.println("======================Zadanie 2======================");
+            writer.printf("======================Zadanie 2======================%n");
 
-        // 4. Find closest user
-        Map<User, User> neighbours = UserPostUtilities.findNearestNeighbours(userList);
-        for (Map.Entry<User, User> n : neighbours.entrySet()) {
-            System.out.println(n.getKey().getName() + " has nearest neighbor " + n.getValue().getName());
+            // 3. Check for unique posts
+            List<String> notUniquePosts = UserPostUtilities.getNotUniquePostTitles(postList);
+            int numberOfNotUnique = notUniquePosts.size();
+            if (numberOfNotUnique == 0) {
+                System.out.println("All post titles are unique");
+                writer.printf("All post titles are unique%n");
+            }
+            else {
+                for (String s : notUniquePosts) {
+                    System.out.println(s);
+                    writer.printf("%s%n", s);
+                }
+            }
+
+            System.out.println("======================Zadanie 3======================");
+            writer.printf("======================Zadanie 3======================%n");
+
+            // 4. Find closest user
+            Map<User, User> neighbours = UserPostUtilities.findNearestNeighbours(userList);
+            for (Map.Entry<User, User> n : neighbours.entrySet()) {
+                System.out.println(n.getKey().getName() + " has nearest neighbor " + n.getValue().getName());
+                writer.printf("%s has nearest neighbor %s%n", n.getKey().getName(), n.getValue().getName());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("File writer error!");
         }
     }
 }

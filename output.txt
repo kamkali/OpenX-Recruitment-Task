@@ -1,0 +1,24 @@
+======================Zadanie 1======================
+Kurtis Weissnat napisał(a) 10 postów
+Mrs. Dennis Schulist napisał(a) 10 postów
+Clementina DuBuque napisał(a) 10 postów
+Clementine Bauch napisał(a) 10 postów
+Nicholas Runolfsdottir V napisał(a) 10 postów
+Glenna Reichert napisał(a) 10 postów
+Ervin Howell napisał(a) 10 postów
+Leanne Graham napisał(a) 10 postów
+Chelsey Dietrich napisał(a) 10 postów
+Patricia Lebsack napisał(a) 10 postów
+======================Zadanie 2======================
+All post titles are unique
+======================Zadanie 3======================
+Kurtis Weissnat has nearest neighbor Chelsey Dietrich
+Mrs. Dennis Schulist has nearest neighbor Clementina DuBuque
+Clementina DuBuque has nearest neighbor Chelsey Dietrich
+Clementine Bauch has nearest neighbor Ervin Howell
+Nicholas Runolfsdottir V has nearest neighbor Patricia Lebsack
+Glenna Reichert has nearest neighbor Patricia Lebsack
+Ervin Howell has nearest neighbor Clementine Bauch
+Leanne Graham has nearest neighbor Chelsey Dietrich
+Chelsey Dietrich has nearest neighbor Clementina DuBuque
+Patricia Lebsack has nearest neighbor Glenna Reichert
