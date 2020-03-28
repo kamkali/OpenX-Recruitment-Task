@@ -7,6 +7,11 @@ import java.io.PrintWriter;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Solution for OpenX recruitment task variant 2
+ * @author Kamil Kaliś
+ */
+
 public class Main {
     public static void main(String[] args) {
         try (PrintWriter writer = new PrintWriter(new FileWriter("output.txt"))) {
@@ -19,8 +24,8 @@ public class Main {
             // Merge data
             Map<User, List<Post>> mergedApi = UserPostUtilities.mergePostsWithUsers(userList, postList);
 
-            System.out.println("======================Zadanie 1======================");
-            writer.printf("======================Zadanie 1======================%n");
+            System.out.println("======================Section 1======================");
+            writer.printf("======================Section 1======================%n");
             // 2. Count how many posts each user posted and return it as list
             List<String> posts = UserPostUtilities.countUserPosts(mergedApi);
             for (String s : posts) {
@@ -28,8 +33,8 @@ public class Main {
                 writer.printf("%s%n", s);
             }
 
-            System.out.println("======================Zadanie 2======================");
-            writer.printf("======================Zadanie 2======================%n");
+            System.out.println("======================Section 2======================");
+            writer.printf("======================Section 2======================%n");
 
             // 3. Check for unique posts
             List<String> notUniquePosts = UserPostUtilities.getNotUniquePostTitles(postList);
@@ -45,8 +50,8 @@ public class Main {
                 }
             }
 
-            System.out.println("======================Zadanie 3======================");
-            writer.printf("======================Zadanie 3======================%n");
+            System.out.println("======================Section 3======================");
+            writer.printf("======================Section 3======================%n");
 
             // 4. Find closest user
             Map<User, User> neighbours = UserPostUtilities.findNearestNeighbours(userList);
@@ -56,7 +61,6 @@ public class Main {
             }
         } catch (IOException e) {
             e.printStackTrace();
-            System.out.println("File writer error!");
         }
     }
 }

@@ -6,6 +6,11 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * Address model
+ * @author Kamil Kaliś
+ */
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

@@ -6,6 +6,11 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * Company model
+ * @author Kamil Kaliś
+ */
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

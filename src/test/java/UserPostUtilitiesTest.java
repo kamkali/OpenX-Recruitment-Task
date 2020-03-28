@@ -5,8 +5,11 @@ import org.junit.jupiter.api.Test;
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.internal.matchers.Equality.areEqual;
+
+/**
+ * Tests for UserPostUtilities class
+ * @author Kamil Kaliś
+ */
 
 public class UserPostUtilitiesTest {
 
@@ -96,6 +99,6 @@ public class UserPostUtilitiesTest {
 
         Map<User, User> resultMap = UserPostUtilities.findNearestNeighbours(Arrays.asList(user1, user2, user3));
 
-        assertTrue(areEqual(expectedMap, resultMap));
+        assertEquals(expectedMap, resultMap);
     }
 }
