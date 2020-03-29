@@ -39,7 +39,8 @@ public class RestClient {
     }
 
     /**
-     * Function to collect data about posts from first endpoint and parse it to
+     * Function to collect data about posts from first endpoint
+     * and parse it to Post object
      *
      * @return list of post data from API
      */
@@ -55,6 +56,7 @@ public class RestClient {
 
     /**
      * Function to collect data about users from second endpoint
+     * and parse it to User object
      *
      * @return list of users data from API
      */
