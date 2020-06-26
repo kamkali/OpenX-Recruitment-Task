@@ -1,6 +1,6 @@
-# OpenX Recruitment Task
+# Rest Client Task
 
-This is a solution of OpenX recruitment task variant 2.
+This is a solution of example recruitment task.
 
 ## Result
 
